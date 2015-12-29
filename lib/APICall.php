@@ -15,8 +15,13 @@ abstract class APICall
 	//Activate the API call - read the 
 	public function activate()
 	{
-	    $this->readParameters();
-		$this->processData();
+	    $resultParam = $this->readParameters();
+		$resultProcess = $this->processData();
+		
+		if( $resultParam && $resultProcess )
+			return true;		
+		else
+			return false;
 	}
 	
 	//Grab value set to a parameter. If parameter is not set and required is false, return null

@@ -19,6 +19,8 @@
 	{
 	    $this->username = $this->getParameterValue("username");
 		$this->password = $this->getParameterValue("password");
+		
+		return true;
 	}
 	
 	//attempt to insert the user into the database
@@ -48,6 +50,8 @@
 		}
 		else //username taken
 			throw new Exception( "Username taken" );
+			
+		return true;
 	}
  }
 
