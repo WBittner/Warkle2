@@ -20,7 +20,7 @@ abstract class Query
 		{
 			$result = $this->connection->query( $this->sql );
 			if( $result === FALSE )
-				throw new Exception( 'Sql in '.get_class($this).' errored.' );
+				throw new Exception( 'Sql in '.get_class($this).' errored.'.PHP_EOL.$this->connection->error );
 		}
 		else
 			throw new Exception( 'Sql not set in '.get_class($this).' query ' );
