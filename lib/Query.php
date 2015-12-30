@@ -28,6 +28,11 @@ abstract class Query
 		return $result;
 	}
 	
+	function getSQL()
+	{
+		return $this->sql;
+	}	
+	
 	function getNumRows()
 	{
 		$result = $this->query();
