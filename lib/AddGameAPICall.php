@@ -6,6 +6,7 @@
  require_once("APICall.php");
  require_once("Connect.php");
  require_once("AddGameQuery.php");
+ require_once("RollDiceQuery.php");
  require_once("Conf.php");
 
  //Class to handle the heavy lifting.
@@ -30,6 +31,16 @@
 		$conn = getDatabaseConnection();
 		$addGameQuery = new AddGameQuery( $conn, $this->player1, $this->player2 );
 		$addGameQuery->query();
+		
+		//roll dice
+		$dice = array();
+		for ($i = 0; $i < 6; $i++) 
+		{
+  		  array_push( $dice, rand( 1, 6 ) );
+		}
+		
+		$rollDiceQuery = new RollDiceQuery( $conn,  $conn->insert_id, $dice );
+		$rollDiceQuery->query();
 			
 		return true;
 	}

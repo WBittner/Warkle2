@@ -6,6 +6,7 @@
  require_once("APICall.php");
  require_once("Connect.php");
  require_once("ChangeTurnQuery.php");
+ require_once("RollDiceQuery.php");
  require_once("Conf.php");
 
  //Class to handle the heavy lifting.
@@ -24,10 +25,20 @@
 	//PRE: assume username is valid, as logged in
 	protected function processData()
 	{
-		//add game
+		//update turn game
 		$conn = getDatabaseConnection();
-		$addGameQuery = new ChangeTurnQuery( $conn, $this->game );
-		$addGameQuery->query();
+		$changeTurnQuery = new ChangeTurnQuery( $conn, $this->game );
+		$changeTurnQuery->query();
+		
+		//reroll dice
+		$dice = array();
+		for ($i = 0; $i < 6; $i++) 
+		{
+  		  array_push( $dice, rand( 1, 6 ) );
+		}
+		
+		$rollDiceQuery = new RollDiceQuery( $conn, $this->game, $dice );
+		$rollDiceQuery->query();
 			
 		return true;
 	}

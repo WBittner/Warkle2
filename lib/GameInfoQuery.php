@@ -14,6 +14,7 @@ class GameInfoQuery extends Query
 	private $player1Score;
 	private $player2Score;
 	private $turn;
+	private $dice = array();
 	
 	function __construct( $conn, $game )
 	{
@@ -37,6 +38,10 @@ class GameInfoQuery extends Query
 		$this->player1Score = $result["player1_score"];
 		$this->player2Score = $result["player2_score"];
 		$this->turn = $result["turn"];
+		
+		for( $i = 1; $i <= 6; $i++ )
+			array_push( $this->dice, $result["dice$i"] );
+	
 	}
 	
 	//return assoc array
@@ -52,7 +57,8 @@ class GameInfoQuery extends Query
 						"player2"=> $this->getPlayer2(),
 						"player1Score"=> $this->getPlayer1Score(),
 						"player2Score"=> $this->getPlayer2Score(),
-						"turn"=> $this->getTurn()
+						"turn"=> $this->getTurn(),
+						"dice"=> $this->getDice()
 					   );
 					   
 		return $result;
@@ -64,6 +70,14 @@ class GameInfoQuery extends Query
 			$this->fetchGameInfo();
 		
 		return $this->turn;
+	}
+	
+	function getDice()
+	{
+		if( empty( $this->dice ) )
+			$this->fetchGameInfo();
+		
+		return $this->dice;
 	}
 	
 	function getPlayer1()
