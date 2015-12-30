@@ -19,6 +19,7 @@ class PasswordQuery extends Query
 	
 	function getPassword()
 	{
+		//Only once as only one user
 		$result = $this->query();
 		$result = $result->fetch_assoc();
 		return $result["password"];
